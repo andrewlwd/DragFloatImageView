@@ -1,4 +1,4 @@
-package com.example.dragfloatimageview;
+package com.example.dragfloatimageview.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -8,6 +8,12 @@ import android.view.animation.DecelerateInterpolator;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
+/**
+ * 可拖动的ImageView
+ *
+ * @author mly
+ * @date: 2020/4/8 10:27
+ */
 public class DragFloatImageView extends AppCompatImageView {
     private float lastX;
     private float lastY;

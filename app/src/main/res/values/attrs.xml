@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RichTextView">
+        <attr name="android:textStyle" />
+
+        <attr name="rtvText_1" format="string" />
+        <attr name="rtvTextSize_1" format="dimension" />
+        <attr name="rtvTextColor_1" format="color" />
+        <attr name="rtvTextStyle_1">
+            <flag name="normal" value="0" />
+            <flag name="bold" value="1" />
+            <flag name="italic" value="2" />
+        </attr>
+
+        <attr name="rtvText_2" format="string" />
+        <attr name="rtvTextSize_2" format="dimension" />
+        <attr name="rtvTextColor_2" format="color" />
+        <attr name="rtvTextStyle_2">
+            <flag name="normal" value="0" />
+            <flag name="bold" value="1" />
+            <flag name="italic" value="2" />
+        </attr>
+
+        <attr name="rtvText_3" format="string" />
+        <attr name="rtvTextSize_3" format="dimension" />
+        <attr name="rtvTextColor_3" format="color" />
+        <attr name="rtvTextStyle_3">
+            <flag name="normal" value="0" />
+            <flag name="bold" value="1" />
+            <flag name="italic" value="2" />
+        </attr>
+
+        <attr name="rtvText_4" format="string" />
+        <attr name="rtvTextSize_4" format="dimension" />
+        <attr name="rtvTextColor_4" format="color" />
+        <attr name="rtvTextStyle_4">
+            <flag name="normal" value="0" />
+            <flag name="bold" value="1" />
+            <flag name="italic" value="2" />
+        </attr>
+
+    </declare-styleable>
+</resources>

@@ -15,7 +15,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.dragfloatimageview.DragFloatImageView
+    <com.example.dragfloatimageview.widget.DragFloatImageView
         android:id="@+id/dragBtn"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -26,5 +26,30 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.example.dragfloatimageview.widget.RichTextView
+        android:id="@+id/rtv"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@android:color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rtvTextColor_1="#000"
+        app:rtvTextColor_2="#f00"
+        app:rtvTextColor_3="#0f0"
+        app:rtvTextSize_1="12sp"
+        app:rtvTextSize_3="18sp"
+        app:rtvTextSize_4="18sp"
+        app:rtvTextStyle_1="bold"
+        app:rtvTextStyle_2="italic"
+        app:rtvTextStyle_4="bold"
+        app:rtvText_1="@string/app_name"
+        app:rtvText_2="大大隔"
+        app:rtvText_3=" 33 "
+        app:rtvText_4="44" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
