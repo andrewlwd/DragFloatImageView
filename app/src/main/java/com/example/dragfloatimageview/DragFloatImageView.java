@@ -67,10 +67,6 @@ public class DragFloatImageView extends AppCompatImageView {
                     animateX(parentWidth - getWidth() - getX());
                 } else {
                     //靠左吸附
-                    animate().setInterpolator(new DecelerateInterpolator())
-                            .setDuration(300)
-                            .xBy(-getX())
-                            .start();
                     animateX(-getX());
                 }
                 break;
