@@ -1,2 +1,2 @@
 # DragFloatImageView
-可移动到任意位置的ImageView
+可通过拖拽移动的ImageView
