@@ -55,7 +55,8 @@ public class DragFloatImageView extends AppCompatImageView {
                 if (Math.abs(dx * dx + dy * dy) > 1) {
                     float x = getX() + dx;
                     float y = getY() + dy;
-                    //这样写在到达上下边界时会有抖动效果
+                    x = x < 0 ? 0 : (x + getWidth() > parentWidth ? parentWidth - getWidth() : x);
+                    //这样写在到达上下边界时会有抖动效果,但若ACTION_UP世界丢失，则可能越界
                     y = getY() < 0 ? 0 : (getY() + getHeight() > parentHeight ? parentHeight - getHeight() : y);
                     setX(x);
                     setY(y);
