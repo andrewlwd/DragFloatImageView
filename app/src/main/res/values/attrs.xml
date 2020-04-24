@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <declare-styleable name="TableView">
+        <attr name="tableColumns" format="integer" />
+        <attr name="tableRows" format="integer" />
+        <attr name="tableColumnsWeights" format="string" />
+        <attr name="tableDividerWidth" format="dimension" />
+        <attr name="tableDividerColor" format="color" />
+        <attr name="tableCornerRadius" format="dimension" />
+        <attr name="tableCellLayout" format="reference" />
+    </declare-styleable>
+
     <declare-styleable name="RichTextView">
         <attr name="android:textStyle" />
 
