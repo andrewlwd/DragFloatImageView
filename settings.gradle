@@ -1,2 +1,3 @@
 rootProject.name='DragFloatImageView'
 include ':app'
+include ':library'

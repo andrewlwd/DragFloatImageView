@@ -20,7 +20,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.example.dragfloatimageview.widget.DragFloatImageView
+        <com.library.customviews.DragFloatImageView
             android:id="@+id/dragBtn"
             android:layout_width="64dp"
             android:layout_height="64dp"
@@ -31,7 +31,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvHello" />
 
-        <com.example.dragfloatimageview.widget.RichTextView
+        <com.library.customviews.RichTextView
             android:id="@+id/rtv"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -56,7 +56,7 @@
             app:rtvText_3=" 33 "
             app:rtvText_4="44" />
 
-        <com.example.dragfloatimageview.widget.TableView
+        <com.library.customviews.TableView
             android:id="@+id/dataTable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

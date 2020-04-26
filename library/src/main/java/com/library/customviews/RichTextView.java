@@ -1,4 +1,4 @@
-package com.example.dragfloatimageview.widget;
+package com.library.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,8 +13,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import androidx.appcompat.widget.AppCompatTextView;
-
-import com.example.dragfloatimageview.R;
 
 /**
  * 可将文本分成多段分别设置样式
@@ -64,7 +62,6 @@ public class RichTextView extends AppCompatTextView {
         textSize_1 = (int) ta.getDimension(R.styleable.RichTextView_rtvTextSize_1, getTextSize());
         textColor_1 = ta.getColor(R.styleable.RichTextView_rtvTextColor_1, getCurrentTextColor());
         textStyle_1 = ta.getInt(R.styleable.RichTextView_rtvTextStyle_1, defaultStyle);
-        ;
 
         text_2 = ta.getString(R.styleable.RichTextView_rtvText_2);
         textSize_2 = (int) ta.getDimension(R.styleable.RichTextView_rtvTextSize_2, getTextSize());

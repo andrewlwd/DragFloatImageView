@@ -1,4 +1,4 @@
-package com.example.dragfloatimageview.widget;
+package com.library.customviews;
 
 import android.content.Context;
 import android.util.AttributeSet;

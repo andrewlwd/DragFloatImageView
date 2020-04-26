@@ -7,8 +7,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.dragfloatimageview.widget.RichTextView;
-import com.example.dragfloatimageview.widget.TableView;
+
+import com.library.customviews.RichTextView;
+import com.library.customviews.TableView;
 
 import java.util.ArrayList;
 import java.util.List;

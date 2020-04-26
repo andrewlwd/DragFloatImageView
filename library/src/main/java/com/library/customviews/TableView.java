@@ -1,4 +1,4 @@
-package com.example.dragfloatimageview.widget;
+package com.library.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -21,8 +21,6 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.Px;
-
-import com.example.dragfloatimageview.R;
 
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
@@ -71,7 +69,7 @@ public class TableView extends LinearLayout {
         columnsWeights = getWeights(ta.getString(R.styleable.TableView_tableColumnsWeights));
         dividerWidth = ta.getDimension(R.styleable.TableView_tableDividerWidth, 1);
         dividerColor = ta.getColor(R.styleable.TableView_tableDividerColor, Color.LTGRAY);
-        cellLayoutId = ta.getResourceId(R.styleable.TableView_tableCellLayout, R.layout.bures_table_cell_view);
+        cellLayoutId = ta.getResourceId(R.styleable.TableView_tableCellLayout, R.layout.table_cell_view);
         ta.recycle();
 
         config = initConfig();
