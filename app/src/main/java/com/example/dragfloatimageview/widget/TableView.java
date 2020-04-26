@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import androidx.annotation.Px;
 
 import com.example.dragfloatimageview.R;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,12 +71,18 @@ public class TableView extends LinearLayout {
         columnsWeights = getWeights(ta.getString(R.styleable.TableView_tableColumnsWeights));
         dividerWidth = ta.getDimension(R.styleable.TableView_tableDividerWidth, 1);
         dividerColor = ta.getColor(R.styleable.TableView_tableDividerColor, Color.LTGRAY);
-        cellLayoutId = ta.getResourceId(R.styleable.TableView_tableCellLayout, R.layout.bures_table_view_item);
+        cellLayoutId = ta.getResourceId(R.styleable.TableView_tableCellLayout, R.layout.bures_table_cell_view);
         ta.recycle();
 
         config = initConfig();
 
         setOrientation(VERTICAL);
+
+        // TODO: 2020/4/26  dividerWidth是动态设置的，不应该放在构造方法中，
+        //  但是动态设置的话下面的写法会使padding越来越大，待优化
+        int divider = (int) this.dividerWidth;
+        setPadding(getPaddingLeft() + divider, getPaddingTop() + divider,
+                getPaddingRight() + divider, getPaddingBottom() + divider);
 
         paint = new Paint();
         paint.setAntiAlias(true);
@@ -91,15 +99,13 @@ public class TableView extends LinearLayout {
         checkWeights();
         paint.setColor(dividerColor);
         paint.setStrokeWidth(dividerWidth);
-        int divider = (int) this.dividerWidth;
-        setPadding(getPaddingLeft() + divider, getPaddingTop() + divider,
-                getPaddingRight() + divider, getPaddingBottom() + divider);
         for (int i = 0; i < rows; i++) {
             LinearLayout ll = new LinearLayout(getContext());
             for (int j = 0; j < columns; j++) {
                 TextView tv = (TextView) LayoutInflater.from(getContext()).inflate(cellLayoutId, this, false);
                 LinearLayout.LayoutParams lp = (LayoutParams) tv.getLayoutParams();
                 lp.width = 0;
+                lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
                 lp.weight = columnsWeights.get(j);
                 lp.gravity = Gravity.CENTER_VERTICAL;
                 ll.addView(tv, lp);
