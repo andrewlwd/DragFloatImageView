@@ -43,6 +43,7 @@ public class TableView extends LinearLayout {
     private int columns;
     private int rows;
     float dividerWidth;
+    float oldDividerWidth;
     int dividerColor;
     float radius;
     private List<Float> columnsWeights;
@@ -72,47 +73,54 @@ public class TableView extends LinearLayout {
         cellLayoutId = ta.getResourceId(R.styleable.TableView_tableCellLayout, R.layout.table_cell_view);
         ta.recycle();
 
-        config = initConfig();
-
         setOrientation(VERTICAL);
+        initConfig();
+        initPaint();
+        initViews();
+    }
 
-        // TODO: 2020/4/26  dividerWidth是动态设置的，不应该放在构造方法中，
-        //  但是动态设置的话下面的写法会使padding越来越大，待优化
-        int divider = (int) this.dividerWidth;
-        setPadding(getPaddingLeft() + divider, getPaddingTop() + divider,
-                getPaddingRight() + divider, getPaddingBottom() + divider);
-
+    private void initPaint() {
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
-
-        initViews();
     }
 
     private void initViews() {
         removeAllViews();
         if (cellLayoutId == 0) {
-            throw new IllegalArgumentException("cellLayoutId must not 0。");
+            throw new IllegalArgumentException("cellLayoutId must not 0.");
         }
         checkWeights();
+        updatePadding();
         paint.setColor(dividerColor);
         paint.setStrokeWidth(dividerWidth);
         for (int i = 0; i < rows; i++) {
             LinearLayout ll = new LinearLayout(getContext());
             for (int j = 0; j < columns; j++) {
-                TextView tv = (TextView) LayoutInflater.from(getContext()).inflate(cellLayoutId, this, false);
-                LinearLayout.LayoutParams lp = (LayoutParams) tv.getLayoutParams();
+                View cellView = LayoutInflater.from(getContext()).inflate(cellLayoutId, this, false);
+                TextView tv = (TextView) (cellView instanceof TextView ? cellView : cellView.findViewById(R.id.tv));
+                LinearLayout.LayoutParams lp = (LayoutParams) cellView.getLayoutParams();
                 lp.width = 0;
                 lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
                 lp.weight = columnsWeights.get(j);
                 lp.gravity = Gravity.CENTER_VERTICAL;
-                ll.addView(tv, lp);
+                ll.addView(cellView, lp);
                 if (listener != null) {
-                    listener.onViewAdded(new Cell(tv, rows, columns, i, j, i * columns + j));
+                    listener.onViewAdded(new Cell(cellView, tv, rows, columns, i, j, i * columns + j));
                 }
             }
             addView(ll, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
+    }
+
+    /**
+     * 留出网格线的空间
+     */
+    private void updatePadding() {
+        int divider = (int) (dividerWidth - oldDividerWidth);
+        setPadding(getPaddingLeft() + divider, getPaddingTop() + divider,
+                getPaddingRight() + divider, getPaddingBottom() + divider);
+        oldDividerWidth = this.dividerWidth;
     }
 
     @Override
@@ -195,7 +203,7 @@ public class TableView extends LinearLayout {
     }
 
     private Config initConfig() {
-        Config config = new Config(this);
+        config = new Config(this);
         config.columns = columns;
         config.rows = rows;
         config.radius = radius;
@@ -228,7 +236,8 @@ public class TableView extends LinearLayout {
     }
 
     public static class Cell {
-        public TextView cellView;
+        public View cellView;
+        public TextView tv;
         public int totalRows;
         public int totalColumns;
         public int rowNum;
@@ -238,8 +247,9 @@ public class TableView extends LinearLayout {
          */
         public int position;
 
-        private Cell(TextView cellView, int totalRows, int totalColumns, int rowNum, int columnNum, int position) {
+        private Cell(View cellView, TextView tv, int totalRows, int totalColumns, int rowNum, int columnNum, int position) {
             this.cellView = cellView;
+            this.tv = tv;
             this.totalRows = totalRows;
             this.totalColumns = totalColumns;
             this.rowNum = rowNum;
@@ -329,7 +339,7 @@ public class TableView extends LinearLayout {
         }
 
         /**
-         * 每个小格的布局，目前只支持根布局为TextView
+         * 每个小格的布局，布局中必须有一个 TextView 且 id 为 android:id="@+id/tv"
          */
         public Config setCellLayoutId(@LayoutRes int cellLayoutId) {
             this.cellLayoutId = cellLayoutId;

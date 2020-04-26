@@ -53,16 +53,16 @@ public class MainActivity extends AppCompatActivity {
 
         TableView table = findViewById(R.id.dataTable);
         //通过代码设置
-        table.setConfig(table.getConfig()
+        table.getConfig()
                 .setCellLayoutId(R.layout.table_item)
                 .setColumns(3)
                 .setRows((int) Math.ceil(list.size()))
                 .setColumnsWeights(2, 4, 6f)
                 .setRadius(15)
-                .setDividerWidth(66)
+                .setDividerWidth(2)
                 .setListener((cell) -> {
                     int rowNum = cell.rowNum;
-                    TextView cellView = cell.cellView;
+                    TextView cellView = cell.tv;
                     int columnNum = cell.columnNum;
                     if (rowNum == 0) {
                         cellView.setBackgroundColor(Color.GRAY);
@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     cellView.setText(list.get(rowNum)[columnNum]);
                     Log.e(TAG, "onViewAdded: " + rowNum + ", " + columnNum);
-                }));
+                })
+                .update();
 
     }
 }

@@ -8,6 +8,7 @@
         <attr name="tableDividerWidth" format="dimension" />
         <attr name="tableDividerColor" format="color" />
         <attr name="tableCornerRadius" format="dimension" />
+        <!-- 布局中必须有一个 TextView 且 id 为 android:id="@+id/tv" -->
         <attr name="tableCellLayout" format="reference" />
     </declare-styleable>
 
