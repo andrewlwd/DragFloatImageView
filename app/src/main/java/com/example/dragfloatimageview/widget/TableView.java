@@ -37,6 +37,9 @@ import java.util.List;
  */
 public class TableView extends LinearLayout {
     private static final String TAG = "DataTableView";
+    /**
+     * 行数
+     */
     private int columns;
     private int rows;
     float dividerWidth;
@@ -66,7 +69,7 @@ public class TableView extends LinearLayout {
         columnsWeights = getWeights(ta.getString(R.styleable.TableView_tableColumnsWeights));
         dividerWidth = ta.getDimension(R.styleable.TableView_tableDividerWidth, 1);
         dividerColor = ta.getColor(R.styleable.TableView_tableDividerColor, Color.LTGRAY);
-        cellLayoutId = ta.getResourceId(R.styleable.TableView_tableCellLayout, 0);
+        cellLayoutId = ta.getResourceId(R.styleable.TableView_tableCellLayout, R.layout.bures_table_view_item);
         ta.recycle();
 
         config = initConfig();
@@ -83,7 +86,7 @@ public class TableView extends LinearLayout {
     private void initViews() {
         removeAllViews();
         if (cellLayoutId == 0) {
-            return;
+            throw new IllegalArgumentException("cellLayoutId must not 0。");
         }
         checkWeights();
         paint.setColor(dividerColor);
@@ -98,9 +101,10 @@ public class TableView extends LinearLayout {
                 LinearLayout.LayoutParams lp = (LayoutParams) tv.getLayoutParams();
                 lp.width = 0;
                 lp.weight = columnsWeights.get(j);
+                lp.gravity = Gravity.CENTER_VERTICAL;
                 ll.addView(tv, lp);
                 if (listener != null) {
-                    listener.onViewAdded(tv, i, j);
+                    listener.onViewAdded(new Cell(tv, rows, columns, i, j, i * columns + j));
                 }
             }
             addView(ll, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -177,6 +181,7 @@ public class TableView extends LinearLayout {
     private List<Float> getWeights(String weightStr) {
         List<Float> weights = new ArrayList<>();
         if (!TextUtils.isEmpty(weightStr)) {
+            weightStr = weightStr.replace(" ", "");
             String[] list = weightStr.split(",");
             for (String s : list) {
                 weights.add(Float.valueOf(s));
@@ -186,7 +191,7 @@ public class TableView extends LinearLayout {
     }
 
     private Config initConfig() {
-        Config config = new Config();
+        Config config = new Config(this);
         config.columns = columns;
         config.rows = rows;
         config.radius = radius;
@@ -205,8 +210,7 @@ public class TableView extends LinearLayout {
         columns = config.columns;
         rows = config.rows;
         radius = config.radius;
-        columnsWeights.clear();
-        columnsWeights.addAll(config.columnsWeights);
+        columnsWeights = config.columnsWeights;
         dividerWidth = config.dividerWidth;
         dividerColor = config.dividerColor;
         cellLayoutId = config.cellLayoutId;
@@ -219,8 +223,30 @@ public class TableView extends LinearLayout {
         return config;
     }
 
+    public static class Cell {
+        public TextView cellView;
+        public int totalRows;
+        public int totalColumns;
+        public int rowNum;
+        public int columnNum;
+        /**
+         * 在表格中从左到右从上到下开始数的位置编号
+         */
+        public int position;
+
+        private Cell(TextView cellView, int totalRows, int totalColumns, int rowNum, int columnNum, int position) {
+            this.cellView = cellView;
+            this.totalRows = totalRows;
+            this.totalColumns = totalColumns;
+            this.rowNum = rowNum;
+            this.columnNum = columnNum;
+            this.position = position;
+        }
+    }
+
+
     public interface OnCellViewAddedListener {
-        void onViewAdded(TextView cellView, int rowNum, int columnNum);
+        void onViewAdded(Cell cell);
     }
 
     public static class Config {
@@ -232,8 +258,10 @@ public class TableView extends LinearLayout {
         List<Float> columnsWeights;
         OnCellViewAddedListener listener;
         int cellLayoutId;
+        SoftReference<TableView> tableViewReference;
 
-        private Config() {
+        private Config(TableView tableView) {
+            tableViewReference = new SoftReference<>(tableView);
         }
 
         /**
@@ -302,6 +330,12 @@ public class TableView extends LinearLayout {
         public Config setCellLayoutId(@LayoutRes int cellLayoutId) {
             this.cellLayoutId = cellLayoutId;
             return this;
+        }
+
+        public void update() {
+            if (tableViewReference.get() != null) {
+                tableViewReference.get().setConfig(this);
+            }
         }
     }
 
